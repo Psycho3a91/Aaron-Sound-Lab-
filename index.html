@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaron Sound Lab</title>
+<link rel="icon" type="image/png" href="favicon.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #0c1110; color: #f2f2f2; line-height: 1.6; overflow-x: hidden; }
+header { position: fixed; top: 0; width: 100vw; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); background: rgba(0,0,0,0.75); border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000; transition: top 0.3s ease; height: 130px; }
+header img.logo { height: 115px; }
+.button-reserve { padding: 12px 24px; background: #39d000; color: #000; font-weight: bold; text-decoration: none; border-radius: 30px; font-size: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; }
+.button-reserve:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(57,208,0,0.6); filter: brightness(1.2); }
+.button-reserve.contact { background: #fff; color: #000; }
+main { padding-top: 150px; max-width: 1200px; margin: auto; }
+h2 { text-align: center; color: #39d000; margin-bottom: 60px; font-size: 2.2rem; }
+.video-section { width: 100vw; margin-left: calc(-50vw + 50%); padding: 80px 0 40px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0f1a16; }
+.video-background { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 0; }
+.video-container { position: relative; z-index: 1; width: 80%; max-width: 900px; height: 400px; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.35); }
+.video-container iframe { width: 100%; height: 100%; border: none; }
+.video-text { position: relative; z-index: 1; max-width: 900px; margin: 20px auto 0; text-align: center; color: #f2f2f2; font-size: 0.95rem; line-height: 1.5; }
+.studio-section { width: 100vw; margin-left: calc(-50vw + 50%); padding: 160px 20px; position: relative; background: #0f1a16; color: #f2f2f2; overflow: hidden; }
+.studio-background { position: absolute; inset: 0; z-index: 0; }
+.studio-background img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+.studio-section::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,26,22,0.95), rgba(15,26,22,0.75), rgba(15,26,22,0.95)); z-index: 0; }
+.studio-row { max-width: 1200px; margin: 0 auto 110px; display: flex; align-items: flex-start; gap: 70px; position: relative; z-index: 1; flex-wrap: wrap; }
+.studio-row.reverse { flex-direction: row-reverse; }
+.studio-image { flex-shrink: 0; z-index: 1; }
+.studio-image img { width: 520px; max-width: none; border-radius: 18px; box-shadow: 0 30px 70px rgba(0,0,0,0.65); }
+.studio-text { line-height: 1.7; flex: 1; min-width: 350px; max-width: 600px; position: relative; z-index: 2; }
+.studio-text .main-title { font-size: 2.2rem; margin-bottom: 24px; font-weight: 700; }
+.studio-text .sub-text { font-size: 1.2rem; margin-bottom: 20px; line-height: 1.7; }
+.studio-text .highlight { color: #39d000; font-weight: 600; }
+.gallery-section { width: 100vw; margin-left: calc(-50vw + 50%); background: #1a1f1d; padding: 100px 0; }
+.gallery-wrapper { max-width: 1200px; margin: auto; padding: 0 20px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.gallery img { width: 100%; height: auto; border-radius: 14px; filter: brightness(0.85); transition: transform 0.4s ease, filter 0.4s ease; display: block; }
+.gallery img:hover { transform: scale(1.08); filter: brightness(1); }
+.pricing-section { width: 100vw; margin-left: calc(-50vw + 50%); background: #121a17; color: #f2f2f2; padding: 100px 20px; }
+.pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; max-width: 1200px; margin: auto; }
+.price-card { background: #1b2521; border-radius: 18px; padding: 30px; text-align: center; box-shadow: 0 10px 35px rgba(0,0,0,0.5); transition: transform 0.3s ease; }
+.price-card:hover { transform: translateY(-12px); }
+.price-card h3 { color: #39d000; }
+.price { font-size: 1.9rem; font-weight: bold; margin: 15px 0; }
+.contact-section { width: 100vw; margin-left: calc(-50vw + 50%); background: #17332b; padding: 100px 20px; text-align: center; }
+.contact-section .about { font-size: 1.6rem; line-height: 1.8; max-width: 900px; margin: auto; }
+.contact-section .about a { color: #39d000; text-decoration: none; }
+footer { width: 100vw; margin-left: calc(-50vw + 50%); text-align: center; padding: 40px 20px; background: #0f1a16; color: #ccc; }
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Playlist Section */
+.playlist-section { width: 100vw; margin-left: calc(-50vw + 50%); padding: 100px 20px; position: relative; background: #0f1a16; }
+.playlist-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('images/photo7.png') center/cover no-repeat;
+  filter: invert(1) brightness(0.05); /* moins visible */
+}
+.playlist-section h2 {
+  position: relative;
+  z-index: 1;
+  color: #7EFF6D;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.3rem;
+}
+.playlist { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto; }
+.playlist li { margin-bottom: 25px; list-style: none; }
+.playlist-item { display: flex; align-items: center; gap: 15px; }
+.playlist-item img { width: 140px; height: 78px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); transition: transform 0.3s ease; }
+.playlist-item img:hover { transform: scale(1.05); }
+.playlist-item a { display: inline-block; padding: 8px 16px; color: #f2f2f2; text-decoration: none; font-weight: 500; border-radius: 12px; background: #1b2521; transition: all 0.3s ease; font-size: 1rem; }
+.playlist-item a:hover { background: #ffffff; color: #000; transform: translateX(3px); }
+.video-frame { max-height: 0; overflow: hidden; transition: max-height 0.6s ease, opacity 0.6s ease; margin-top: 8px; border-radius: 12px; }
+.video-frame iframe { width: 100%; aspect-ratio: 16/9; border-radius: 0 0 12px 12px; display: block; }
+
+@media(max-width:768px){
+  header { flex-direction: row; justify-content: space-between; height: auto; padding: 15px 20px; }
+  header img.logo { height: 65px; }
+  .button-reserve { font-size: 0.95rem; padding: 10px 20px; }
+  .video-container { width: 95%; height: 250px; }
+  .studio-row, .studio-row.reverse { flex-direction: column; text-align: center; }
+  .studio-text { max-width: 100%; min-width: auto; }
+  .studio-text .main-title { font-size: 1.8rem; }
+  .studio-text .sub-text { font-size: 1.1rem; }
+  .studio-image img { width: 90%; max-width: 350px; margin: 0 auto; }
+  .gallery img { width: 100%; height: auto; object-fit: contain; display: block; }
+  .contact-section .about { font-size: 1.3rem; }
+  .playlist-item img { width: 100px; height: 56px; }
+  .playlist-item a { font-size: 0.9rem; padding: 6px 12px; }
+}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <img src="images/logo.png" alt="Aaron Sound Lab" class="logo">
+  <div>
+    <a href="mailto:aaron.payet@yahoo.fr" class="button-reserve">Réserver</a>
+    <a href="#contact" class="button-reserve contact">Contact</a>
+  </div>
+</header>
+
+<main>
+
+<section class="video-section">
+  <div class="video-background"></div>
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/RaCO-T95K04?autoplay=1&mute=1&loop=1&playlist=RaCO-T95K04" allow="autoplay; encrypted-media" allowfullscreen title="Aaron Sound Lab Video"></iframe>
+  </div>
+  <div class="video-text">
+    <p>Chez Aaron Sound Lab, nous sommes passionnés par la musique et la création sonore. Que vous soyez un artiste en herbe, un groupe établi ou une entreprise à la recherche de solutions audio professionnelles, notre studio est l'endroit idéal pour donner vie à vos idées.</p>
+  </div>
+</section>
+
+<section class="studio-section reveal">
+  <div class="studio-background"><img src="images/photo7.png"></div>
+  <div class="studio-row">
+    <div class="studio-image"><img src="images/photo2.jpg"></div>
+    <div class="studio-text parallax-text" data-speed="0.25">
+      <p class="main-title"><span class="highlight">Aaron Sound Lab – là où votre musique prend vie</span></p>
+      <p class="sub-text">Ici, vous ne venez pas simplement enregistrer : vous progressez. Grâce à un <span class="highlight">coaching vocal précis et bienveillant</span>, vous gagnez en justesse, énergie et confiance face au micro.</p>
+      <p class="sub-text">Nous combinons <span class="highlight">chaleur analogique</span> et <span class="highlight">précision numérique</span> pour un son unique : <span class="highlight">Avalon 737, Voxbox, microphones Neumann, compresseurs DBX160 et 1176</span>… chaque outil est choisi pour capturer l’âme de votre musique. Les plugins de pointe permettent ensuite de peaufiner chaque détail, offrant un rendu prêt à diffuser sur toutes les plateformes.</p>
+    </div>
+  </div>
+  <div class="studio-row reverse">
+    <div class="studio-image"><img src="images/photo3.jpg"></div>
+    <div class="studio-text parallax-text" data-speed="0.25">
+      <p class="sub-text">Un ingénieur du son expérimenté vous accompagne à chaque étape : guidance créative, conseils techniques et artistiques en temps réel, et un environnement confortable pour libérer votre potentiel.</p>
+      <p class="sub-text">Mixage, mastering et suivi complet sont inclus pour un résultat professionnel et harmonieux, du premier enregistrement jusqu’au mastering final.</p>
+      <p class="sub-text">Chez <span class="highlight">Aaron Sound Lab</span>, votre musique n’est pas seulement enregistrée… elle vit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section reveal">
+  <h2>Ambiance & sessions</h2>
+  <div class="gallery-wrapper">
+    <div class="gallery">
+      <img src="images/photo1.png">
+      <img src="images/photo6.png">
+      <img src="images/photo11.jpg">
+      <img src="images/photo4.png">
+      <img src="images/photo8.jpg">
+      <img src="images/photo5.jpg">
+      <img src="images/photo9.jpg">
+      <img src="images/photo10.jpg">
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section reveal">
+  <h2>Tarifs</h2>
+  <div class="pricing">
+    <div class="price-card">
+      <h3>🎵 Session studio</h3>
+      <div class="price">40€/h</div>
+      <p>Réservation flexible, adaptée à vos besoins.<br><strong>Mix et mastering compris</strong></p>
+    </div>
+    <div class="price-card">
+      <h3>📝 Tarif Journée</h3>
+      <div class="price">250€</div>
+      <p>Idéal pour des sessions prolongées et un travail en profondeur.</p>
+    </div>
+    <div class="price-card">
+      <h3>🎶 Pack EP (4-5 titres)</h3>
+      <div class="price">600€</div>
+      <p>Comprend enregistrement, mixage et mastering (composition non incluse).</p>
+    </div>
+    <div class="price-card">
+      <h3>📝 Pack Starter</h3>
+      <div class="price">2h minimum</div>
+      <p>Idéal pour un premier morceau, prise de son + conseils artistiques.</p>
+    </div>
+    <div class="price-card">
+      <h3>📋 Projet complet</h3>
+      <div class="price">Sur devis</div>
+      <p>Accompagnement artistique complet et suivi personnalisé.</p>
+    </div>
+  </div>
+</section>
+<section class="playlist-section reveal">
+  <h2>🎵 Tracks mixés et masterisés</h2>
+  <ul class="playlist">
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/1wscKdYyzMo/hqdefault.jpg" alt="Rachelle (la fée) - Mon Kèr">
+        <a href="javascript:void(0)" onclick="playVideo(this,'1wscKdYyzMo')">Rachelle (la fée) - Mon Kèr</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/qIVCxs3WpM8/hqdefault.jpg" alt="DJODJA - VOLTA PA RUBERA">
+        <a href="javascript:void(0)" onclick="playVideo(this,'qIVCxs3WpM8')">DJODJA - VOLTA PA RUBERA</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/AWegftVTIyU/hqdefault.jpg" alt="Diana Kelly - Évidence">
+        <a href="javascript:void(0)" onclick="playVideo(this,'AWegftVTIyU')">Diana Kelly - Évidence</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/Zxn1is5B_oA/hqdefault.jpg" alt="Hybrid - Mr. Espoir (Kibo Sennin)">
+        <a href="javascript:void(0)" onclick="playVideo(this,'Zxn1is5B_oA')">Hybrid - Mr. Espoir (Kibo Sennin)</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/Xm9wZshttas/hqdefault.jpg" alt="Ooojala - Ma Ville (ft Lesca)">
+        <a href="javascript:void(0)" onclick="playVideo(this,'Xm9wZshttas')">Ooojala - Ma Ville (ft Lesca)</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/Sq0hXbwCHvk/hqdefault.jpg" alt="Yassop - Pas Jolie">
+        <a href="javascript:void(0)" onclick="playVideo(this,'Sq0hXbwCHvk')">Yassop - Pas Jolie</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/WMfppVqOKLE/hqdefault.jpg" alt="Djo Mani - Toz Ya Moz">
+        <a href="javascript:void(0)" onclick="playVideo(this,'WMfppVqOKLE')">Djo Mani - Toz Ya Moz</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/a5nhCRYEzUQ/hqdefault.jpg" alt="Meilleurs alliés - Géraldine F">
+        <a href="javascript:void(0)" onclick="playVideo(this,'a5nhCRYEzUQ')">Meilleurs alliés - Géraldine F</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+    <li>
+      <div class="playlist-item">
+        <img src="https://img.youtube.com/vi/gsmjedniVWU/hqdefault.jpg" alt="L'ARMADA - Nike Air">
+        <a href="javascript:void(0)" onclick="playVideo(this,'gsmjedniVWU')">L'ARMADA - Nike Air</a>
+      </div>
+      <div class="video-frame"><iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </li>
+  </ul>
+  <p style="text-align:center; margin-top:20px; z-index:1; position:relative;">🎧 <a href="https://youtube.com/playlist?list=PLLcy9jPP0omDORlQtg-z7iViQESZBlq5F&si=qnB6xXzzl87YMqA6" target="_blank" style="color:#7EFF6D; text-decoration:none;">Cliquez ici pour écouter toute la playlist sur YouTube</a></p>
+</section>
+
+<section id="contact" class="contact-section reveal">
+  <h2>Contact</h2>
+  <div class="about">
+    <p>Prêt à enregistrer dans une vraie ambiance studio ?</p>
+    <p>✔ <strong>Email :</strong> <a href="mailto:aaron.payet@yahoo.fr">aaron.payet@yahoo.fr</a></p>
+    <p>📱 <strong>Instagram :</strong> <a href="https://www.instagram.com/aaron.sound.lab/" target="_blank">@aaron.sound.lab</a></p>
+  </div>
+</section>
+
+<footer>
+© Aaron Sound Lab – Tous droits réservés
+</footer>
+
+<script>
+let lastScroll = 0;
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  const current = window.pageYOffset;
+  header.style.top = (current > lastScroll && current > 100) ? "-130px" : "0";
+  lastScroll = current;
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const revealOnScroll = () => {
+  reveals.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+  });
+};
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+const texts = document.querySelectorAll('.parallax-text');
+window.addEventListener('scroll', () => {
+  if (window.innerWidth > 768) {
+    texts.forEach(el => {
+      const speed = parseFloat(el.dataset.speed);
+      el.style.transform = `translateY(${-el.getBoundingClientRect().top * speed}px)`;
+    });
+  } else {
+    texts.forEach(el => { el.style.transform = 'none'; });
+  }
+});
+
+// Playlist video
+function playVideo(el, videoId) {
+  const li = el.closest('li');
+  const iframe = li.querySelector('iframe');
+  const frameDiv = li.querySelector('.video-frame');
+
+  document.querySelectorAll('.playlist .video-frame').forEach(v => {
+    if(v !== frameDiv){
+      v.style.maxHeight = "0";
+      v.style.opacity = "0";
+      v.querySelector('iframe').src = "";
+    }
+  });
+
+  if(frameDiv.style.maxHeight && frameDiv.style.maxHeight !== "0px") {
+    frameDiv.style.maxHeight = "0";
+    frameDiv.style.opacity = "0";
+    iframe.src = "";
+  } else {
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+    frameDiv.style.maxHeight = "500px";
+    frameDiv.style.opacity = "1";
+  }
+}
+</script>
+
+</body>
+</html>
